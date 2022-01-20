@@ -50,6 +50,12 @@ final class OpenCageAddress extends Address
     private $formattedAddress;
 
     /**
+     * @var string|null
+     *
+     */
+    private $type;
+
+    /**
      * @param string|null $mgrs
      *
      * @return OpenCageAddress
@@ -152,5 +158,26 @@ final class OpenCageAddress extends Address
     public function getFormattedAddress()
     {
         return $this->formattedAddress;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     *
+     * @return OpenCageAddress
+     */
+    public function withType(string $type = null): self
+    {
+        $new = clone $this;
+        $new->type = $type;
+
+        return $new;
     }
 }

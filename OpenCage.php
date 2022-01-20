@@ -43,7 +43,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
 
     /**
      * @param HttpClient $client an HTTP adapter
-     * @param string     $apiKey an API key
+     * @param string $apiKey an API key
      */
     public function __construct(HttpClient $client, string $apiKey)
     {
@@ -106,7 +106,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     }
 
     /**
-     * @param string      $url
+     * @param string $url
      * @param string|null $locale
      *
      * @return AddressCollection
@@ -168,6 +168,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
             $address = $address->withGeohash(isset($annotations['geohash']) ? $annotations['geohash'] : null);
             $address = $address->withWhat3words(isset($annotations['what3words'], $annotations['what3words']['words']) ? $annotations['what3words']['words'] : null);
             $address = $address->withFormattedAddress($location['formatted']);
+            $address = $address->withType($this->convertType($this->guessType($components)));
 
             $results[] = $address;
         }
@@ -177,7 +178,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
 
     /**
      * @param AddressBuilder $builder
-     * @param array          $location
+     * @param array $location
      */
     private function parseCoordinates(AddressBuilder $builder, array $location)
     {
@@ -209,7 +210,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
 
     /**
      * @param AddressBuilder $builder
-     * @param array          $components
+     * @param array $components
      */
     private function parseAdminsLevels(AddressBuilder $builder, array $components)
     {
@@ -225,7 +226,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
 
     /**
      * @param AddressBuilder $builder
-     * @param array          $components
+     * @param array $components
      */
     private function parseCountry(AddressBuilder $builder, array $components)
     {
@@ -272,6 +273,43 @@ final class OpenCage extends AbstractHttpProvider implements Provider
         $subLocalityKeys = ['residential', 'neighbourhood', 'suburb', 'city_district', 'district', 'quarter', 'houses', 'subdivision'];
 
         return $this->guessBestComponent($components, $subLocalityKeys);
+    }
+
+    /**
+     * @param array $components
+     *
+     * @return string|null
+     */
+    protected function guessType(array $components): ?string
+    {
+        $typeKeys = ['_type'];
+
+        return $this->guessBestComponent($components, $typeKeys);
+    }
+
+    /**
+     * @param string|null $type
+     *
+     * @return string|null
+     */
+    protected function convertType(?string $type): ?string
+    {
+        if (!$type) {
+            return $type;
+        }
+
+        switch ($type) {
+            case 'building':
+                return 'house';
+
+            case 'road':
+                return 'street';
+
+            case 'neighbourhood':
+                return 'neighbourhood';
+        }
+
+        return $type;
     }
 
     /**
