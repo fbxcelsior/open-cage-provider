@@ -192,6 +192,21 @@ final class OpenCageAddress extends Address
         $rv["formattedAddress"] = $this->getFormattedAddress();
         $rv["type"] = $this->getType();
 
+        unset($rv["country"]);
+        unset($rv["countryCode"]);
+        unset($rv["latitude"]);
+        unset($rv["longitude"]);
+
+        $rv["country"] = [
+            "name" => $this->getCountry()->getName(),
+            "code" => $this->getCountry()->getCode(),
+        ];
+
+        $rv["coordinates"] = [
+            "latitude" => $this->getCoordinates()->getLatitude(),
+            "longitude" => $this->getCoordinates()->getLongitude(),
+        ];
+
         return $rv;
     }
 
