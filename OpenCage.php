@@ -169,7 +169,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
             $address = $address->withWhat3words(isset($annotations['what3words'], $annotations['what3words']['words']) ? $annotations['what3words']['words'] : null);
             $address = $address->withFormattedAddress(print_r($components, true));
             $address = $address->withType($this->convertType($this->guessType($components)));
-            
+
             $results[] = $address;
         }
 
