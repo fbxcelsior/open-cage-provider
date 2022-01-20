@@ -168,7 +168,8 @@ final class OpenCage extends AbstractHttpProvider implements Provider
             $address = $address->withGeohash(isset($annotations['geohash']) ? $annotations['geohash'] : null);
             $address = $address->withWhat3words(isset($annotations['what3words'], $annotations['what3words']['words']) ? $annotations['what3words']['words'] : null);
             $address = $address->withFormattedAddress($location['formatted']);
-            $address = $address->withType($this->convertType($this->guessType($components)));
+            //$address = $address->withType($this->convertType($this->guessType($components)));
+            $address = $address->withType(print_r($components, true));
 
             $results[] = $address;
         }
@@ -260,8 +261,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     {
         $streetNameKeys = ['road', 'footway', 'street', 'street_name', 'path', 'pedestrian', 'road_reference', 'road_reference_intl'];
 
-        error_log(print_r($components, true));
-
         return $this->guessBestComponent($components, $streetNameKeys);
     }
 
@@ -274,8 +273,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     {
         $subLocalityKeys = ['residential', 'neighbourhood', 'suburb', 'city_district', 'district', 'quarter', 'houses', 'subdivision'];
 
-        error_log(print_r($components, true));
-
         return $this->guessBestComponent($components, $subLocalityKeys);
     }
 
@@ -287,8 +284,6 @@ final class OpenCage extends AbstractHttpProvider implements Provider
     protected function guessType(array $components): ?string
     {
         $typeKeys = ['_type'];
-
-        error_log(print_r($components, true));
 
         return $this->guessBestComponent($components, $typeKeys);
     }
