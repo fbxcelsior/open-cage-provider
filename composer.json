@@ -11,10 +11,16 @@
             "email": "william.durand1@gmail.com"
         }
     ],
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/fbxcelsior/Geocoder"
+      }
+    ],
     "require": {
         "php": "^7.3 || ^8.0",
         "geocoder-php/common-http": "^4.0",
-        "willdurand/geocoder": "^4.0"
+        "willdurand/geocoder": "master"
     },
     "provide": {
         "geocoder-php/provider-implementation": "1.0"
