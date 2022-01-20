@@ -167,7 +167,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
             $address = $address->withMaidenhead(isset($annotations['Maidenhead']) ? $annotations['Maidenhead'] : null);
             $address = $address->withGeohash(isset($annotations['geohash']) ? $annotations['geohash'] : null);
             $address = $address->withWhat3words(isset($annotations['what3words'], $annotations['what3words']['words']) ? $annotations['what3words']['words'] : null);
-            $address = $address->withFormattedAddress(print_r($components, true));
+            $address = $address->withFormattedAddress($location['formatted']);
             $address = $address->withType($this->convertType($this->guessType($components)));
 
             $results[] = $address;
