@@ -180,4 +180,20 @@ final class OpenCageAddress extends Address
 
         return $new;
     }
+
+    public function toArray(): array
+    {
+        $rv = parent::toArray();
+
+        $rv["mGRS"] = $this->getMGRS();
+        $rv["maidenhead"] = $this->getMaidenhead();
+        $rv["geohash"] = $this->getGeohash();
+        $rv["what3words"] = $this->getWhat3words();
+        $rv["formattedAddress"] = $this->getFormattedAddress();
+        $rv["type"] = $this->getType();
+
+        return $rv;
+    }
+
+
 }
