@@ -270,7 +270,7 @@ final class OpenCage extends AbstractHttpProvider implements Provider
      */
     protected function guessSubLocality(array $components)
     {
-        $subLocalityKeys = ['residential', 'neighbourhood', 'suburb', 'city_district', 'district', 'quarter', 'houses', 'subdivision'];
+        $subLocalityKeys = ['residential', 'neighbourhood', 'suburb', 'city_district', 'district', 'quarter', 'borough', 'houses', 'subdistrict', 'subdivision', 'ward'];
 
         return $this->guessBestComponent($components, $subLocalityKeys);
     }
